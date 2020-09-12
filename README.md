@@ -4,7 +4,6 @@ It can convert GiB, MiB, KiB and Bytes into each other.**
 
 ## Usage
 To use the script correctly, you need a TI NSpire Calculator and the [TI Student Software](https://education.ti.com/en/software "Ti Student Software") with a valid licence key (sold with the calculator).
-![]()
 
 * `<--` `-->` Left/ Right arrow keys change the unit
 * `tab` Clears the screen
