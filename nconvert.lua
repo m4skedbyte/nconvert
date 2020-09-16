@@ -12,6 +12,7 @@ answer={}
 answer[1] = "" --answer 1
 answer[2] = "" --answer 2
 answer[3] = "" --answer 3
+answer[4] = "" --answer 4
 noinput = ""
 
 
@@ -50,11 +51,13 @@ function on.paint(gc)
         local answer_1_width = gc:getStringWidth(answer[1])
         local answer_2_width = gc:getStringWidth(answer[2])
         local answer_3_width = gc:getStringWidth(answer[3])
+        local answer_4_width = gc:getStringWidth(answer[4])
         gc:setFont("sansserif", "b", 12)
         gc:setColorRGB(0,0,255)
         gc:drawString(answer[1],((w/2) - (answer_1_width/2) - 10),100)
         gc:drawString(answer[2],((w/2) - (answer_2_width/2) - 10),120)
-        gc:drawString(answer[3],((w/2) - (answer_3_width/2) -10),140)
+        gc:drawString(answer[3],((w/2) - (answer_3_width/2) - 10),140)
+        gc:drawString(answer[4],((w/2) - (answer_4_width/2) - 10),160)
         gc:setFont("sansserif", "r", 10)
         gc:setColorRGB(0,0,0)
     end
@@ -81,6 +84,7 @@ function on.charIn(char) --value input
             answer[1] = ""
             answer[2] = ""
             answer[3] = ""
+            answer[4] = ""
             input = input..char
             noinput = ""
         else
@@ -102,21 +106,31 @@ function on.enterKey() --calculation
             answer[1] = "MiB: "..(input * 1024)
             answer[2] = "KiB: "..(input * 1024 * 1024)
             answer[3] = "Bytes: "..(input * 1024 * 1024 * 1024)
+            answer[4] = "TiB:"..(input / 1024)
         end
         if unit == "MiB" then
             answer[1] = "GiB: "..(input / 1024) --MiB to GiB
             answer[2] = "KiB: "..(input * 1024) --MiB to KiB
             answer[3] = "Bytes: "..(input * 1024 * 1024) -- MiB to Bytes
+            answer[4] = "TiB: "..((input / 1024) / 1024) --MiB to TiB
         end
         if unit == "KiB" then
             answer[1] = "GiB: "..((input / 1024) / 1024) --KiB to GiB
             answer[2] = "MiB: "..(input / 1024) --KiB to MiB
             answer[3] = "Bytes: "..(input * 1024) -- KiB to Bytes
+            answer[4] = "TiB: "..(((input / 1024) / 1024) / 1024) --KiB to TiB
         end
         if unit == "Bytes" then
             answer[1] = "GiB: "..(((input / 1024) / 1024) / 1024) --Bytes to GiB
             answer[2] = "MiB: "..((input / 1024) / 1024) --Bytes to MiB
             answer[3] = "KiB: "..(input / 1024) --Bytes to KiB
+            answer[4] = "TiB: "..((((input / 10124) / 1024) / 1024) / 1024) --Bytes to TiB
+        end
+        if unit == "TiB" then
+            answer[1] = "GiB: "..(input * 1024) --TiB to GiB
+            answer[2] = "MiB: "..(input * 1024 * 1024) --TiB to MiB
+            answer[3] = "KiB: "..(input * 1024 * 1024 * 1024) --TiB to KiB
+            answer[4] = "Bytes: "..(input * 1024 * 1024 * 1024 * 1024) --TiB to Bytes
         end
     else
         noinput = noinput..noinputmsg
@@ -125,7 +139,7 @@ function on.enterKey() --calculation
 end
 
 function on.arrowRight()
-    if unit_count < 4 then
+    if unit_count < 5 then
         unit_count = (unit_count + 1)
     else
         unit_count = 1
@@ -143,6 +157,9 @@ function on.arrowRight()
     if unit_count == 4 then
         unit = "GiB"
     end
+    if unit_count == 5 then
+        unit == "TiB"
+    end
     screen:invalidate()
 end
 
@@ -150,7 +167,7 @@ function on.arrowLeft()
     if unit_count > 1 then
         unit_count = (unit_count - 1)
     else
-        unit_count = 4
+        unit_count = 5
     end
 
     if unit_count == 1 then
@@ -165,6 +182,9 @@ function on.arrowLeft()
     if unit_count == 4 then
         unit = "GiB"
     end
+    if unit_count == 5 then
+        unit = "TiB"
+    end
     screen:invalidate()
 end
 
@@ -174,6 +194,7 @@ function on.tabKey() --reset
     answer[1] = ""
     answer[2] = ""
     answer[3] = ""
+    answer[4] = ""
     unit = "MiB"
     unit_count = 1
     screen:invalidate()
