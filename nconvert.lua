@@ -4,7 +4,7 @@ local w = screen:width()
 title = "Unit:" --title
 
 unit = "MiB" --unit (default MiB)
-unit_count = 1
+unit_count = 3
 input = "" --input
 noinputmsg = "Please enter a value"
 
@@ -146,20 +146,20 @@ function on.arrowRight()
     end
 
     if unit_count == 1 then
-        unit = "MiB"
+        unit = "TiB"
     end
     if unit_count == 2 then
-        unit = "KiB"
-    end
-    if unit_count == 3 then
-        unit = "Bytes"
-    end
-    if unit_count == 4 then
         unit = "GiB"
     end
-    if unit_count == 5 then
-        unit == "TiB"
+    if unit_count == 3 then
+        unit = "MiB"
     end
+    if unit_count == 4 then
+        unit = "KiB"
+    end
+    if unit_count == 5 then
+        unit = "Bytes"
+    end   
     screen:invalidate()
 end
 
@@ -171,20 +171,20 @@ function on.arrowLeft()
     end
 
     if unit_count == 1 then
-        unit = "MiB"
-    end
-    if unit_count == 2 then
-        unit = "KiB"
-    end
-    if unit_count == 3 then
-        unit = "Bytes"
-    end
-    if unit_count == 4 then
-        unit = "GiB"
-    end
-    if unit_count == 5 then
         unit = "TiB"
     end
+    if unit_count == 2 then
+        unit = "GiB"
+    end
+    if unit_count == 3 then
+        unit = "MiB"
+    end
+    if unit_count == 4 then
+        unit = "KiB"
+    end
+    if unit_count == 5 then
+        unit = "Bytes"
+    end    
     screen:invalidate()
 end
 
@@ -196,6 +196,6 @@ function on.tabKey() --reset
     answer[3] = ""
     answer[4] = ""
     unit = "MiB"
-    unit_count = 1
+    unit_count = 3
     screen:invalidate()
 end
